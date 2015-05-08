@@ -15,7 +15,12 @@ namespace LdapConnect
 			var options = new LdapOptions();
 			options.Parse(args);
 			if (options.ShowDetailedHelp || !options.IsValid())
+			{
 				options.WriteOptionDescriptions(Console.Out);
+				return;
+			}
+
+			var connection = new LdapConnection(options);
 
 			Console.ReadKey();
 		}

@@ -42,6 +42,8 @@
     <Reference Include="System.Xml" />
   </ItemGroup>
   <ItemGroup>
+    <Compile Include="ILdapConnectionSettings.cs" />
+    <Compile Include="LdapConnection.cs" />
     <Compile Include="LdapOptions.cs" />
     <Compile Include="Options.cs" />
     <Compile Include="Program.cs" />

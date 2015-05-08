@@ -1,3 +1,4 @@
-/*.suo
-/ldapconnect/bin
-/ldapconnect/obj
+*.suo
+*.user
+bin
+obj

@@ -7,8 +7,8 @@
     <ProjectGuid>{27EC29B3-88F2-4738-B5A0-30C30BB5B245}</ProjectGuid>
     <OutputType>Exe</OutputType>
     <AppDesignerFolder>Properties</AppDesignerFolder>
-    <RootNamespace>ldapconnect</RootNamespace>
-    <AssemblyName>ldapconnect</AssemblyName>
+    <RootNamespace>LdapConnect</RootNamespace>
+    <AssemblyName>ldap-connect</AssemblyName>
     <TargetFrameworkVersion>v3.5</TargetFrameworkVersion>
     <FileAlignment>512</FileAlignment>
     <TargetFrameworkProfile />
@@ -42,6 +42,8 @@
     <Reference Include="System.Xml" />
   </ItemGroup>
   <ItemGroup>
+    <Compile Include="LdapOptions.cs" />
+    <Compile Include="Options.cs" />
     <Compile Include="Program.cs" />
     <Compile Include="Properties\AssemblyInfo.cs" />
   </ItemGroup>

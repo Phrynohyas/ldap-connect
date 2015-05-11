@@ -9,8 +9,8 @@ namespace LdapConnect
 			Console.WriteLine("LDAP settings tester");
 			Console.WriteLine("");
 			Console.WriteLine("Powered by");
-			Console.WriteLine("    RemObjects InternetPack for .NET https://github.com/remobjects/internetpack");
-			Console.WriteLine("    NDesk.Options");
+			Console.WriteLine("\tRemObjects InternetPack for .NET https://github.com/remobjects/internetpack");
+			Console.WriteLine("\tNDesk.Options");
 
 			var options = new LdapOptions();
 			options.Parse(args);
@@ -27,7 +27,23 @@ namespace LdapConnect
 			connection.TryConnect();
 			Console.WriteLine("Connecton successful. Hostname, port and SSL options are set correctly");
 
-			Console.ReadKey();
+			Console.WriteLine();
+
+			Console.WriteLine("Performing authentication attempt...");
+			LdapUser user;
+			if (string.IsNullOrEmpty(options.UserName))
+			{
+				Console.WriteLine("User name not set. Fake user name and password are used");
+				user = connection.Authenticate(Guid.NewGuid().ToString(), Guid.NewGuid().ToString());
+			}
+			else
+			{
+				user = connection.Authenticate(options.UserName, options.Password);
+			}
+
+			Console.WriteLine(user.ToString());
+
+			Console.WriteLine("Test completed");
 		}
 	}
 }

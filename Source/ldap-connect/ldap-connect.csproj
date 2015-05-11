@@ -45,6 +45,7 @@
     <Compile Include="ILdapConnectionSettings.cs" />
     <Compile Include="LdapConnection.cs" />
     <Compile Include="LdapOptions.cs" />
+    <Compile Include="LdapUser.cs" />
     <Compile Include="Options.cs" />
     <Compile Include="Program.cs" />
     <Compile Include="Properties\AssemblyInfo.cs" />

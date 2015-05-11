@@ -1,4 +1,6 @@
 ﻿using System;
+using System.Collections.Generic;
+using System.Linq;
 using RemObjects.InternetPack.Ldap;
 
 namespace LdapConnect
@@ -40,6 +42,21 @@ namespace LdapConnect
 			this._rootGroupName = settings.RootGroup;
 		}
 
+		~LdapConnection()
+		{
+			this.Dispose();
+		}
+
+		public void Dispose()
+		{
+			if (this._ldap == null)
+				return;
+
+			this._ldap.Dispose();
+
+			GC.SuppressFinalize(this);
+		}
+
 		public void TryConnect()
 		{
 			using (var client = new LdapClient())
@@ -54,19 +71,32 @@ namespace LdapConnect
 			}
 		}
 
-		~LdapConnection()
+		public LdapUser Authenticate(string username, string password)
 		{
-			this.Dispose();
+			var result = new LdapUser(username);
+
+			var lookup = this._ldap.Login(username, password);
+
+			if (lookup == null)
+			{
+				return result;
+			}
+
+			result.UserName = lookup.Username;
+			result.UserDN = lookup.DN;
+			result.IsAccessAllowed = LdapConnection.CheckGroupMembership(lookup.GroupMembership, this._userGroupName, true);
+			result.IsRootAccessAllowed = result.IsAccessAllowed && LdapConnection.CheckGroupMembership(lookup.GroupMembership, this._rootGroupName, false);
+			result.SecurityRoles = lookup.GroupMembership.ToArray();
+
+			return result;
 		}
 
-		public void Dispose()
+		private static bool CheckGroupMembership(IEnumerable<string> groups, string group, bool defaultValue)
 		{
-			if (this._ldap == null)
-				return;
+			if (string.IsNullOrEmpty(group))
+				return defaultValue;
 
-			this._ldap.Dispose();
-
-			GC.SuppressFinalize(this);
+			return groups.Any(g => string.Equals(g, group, StringComparison.OrdinalIgnoreCase));
 		}
 	}
 }

@@ -1,4 +1,5 @@
-﻿using NDesk.Options;
+﻿using System;
+using NDesk.Options;
 
 namespace LdapConnect
 {
@@ -23,8 +24,15 @@ namespace LdapConnect
 			this.Add(@"user=", @"{username} to check (optional)", v => this.UserName = v);
 			this.Add(@"password=", @"{password} to check (optional)", v => this.Password = v);
 
-			this.Add(@"server=", @"LDAP server {hostname}. The default value is localhost (optional)", v => this.Password = v);
-			this.Add(@"port=", @"LDAP {server port}. The default value is 389 (optional)", v => this.Password = v);
+			this.Add(@"server=", @"LDAP server {hostname}. The default value is localhost (optional)", v => this.LdapServer = v);
+			this.Add(@"port=", @"LDAP {server port}. The default value is 389 (optional)", v =>
+																								{
+																									int value;
+																									if (int.TryParse(v, out value))
+																										this.LdapPort = value;
+																									else
+																										this.ShowDetailedHelp = true;
+																								});
 			this.Add(@"cert=", @"SSL {certificate} (optional)", v => this.LdapCertificate = v);
 
 			this.Add(@"lookup_dn=", @"LDAP {server login}, f.e. for 'uid=ldapuser,ou=internal,dc=myserver,dc=com' (required)", v => this.LookupDN = v);
@@ -69,7 +77,7 @@ namespace LdapConnect
 
 		public bool IsValid()
 		{
-			if (!(string.IsNullOrEmpty(this.UserName) ^ string.IsNullOrEmpty(this.Password)))
+			if (string.IsNullOrEmpty(this.UserName) ^ string.IsNullOrEmpty(this.Password))
 				return false;
 
 			if (string.IsNullOrEmpty(this.LookupDN) || string.IsNullOrEmpty(this.LookupPassword))

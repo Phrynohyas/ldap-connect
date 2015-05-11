@@ -1,4 +1,4 @@
-# ldap-connect
+# ldap-connect 0.8
 
 Simple tool to test LDAP server connection and authentication settings. This tool allows to test the LDAP server conenction settings that can be later used as [LDAP connection provider](http://wiki.remobjects.com/wiki/Relativity_Server_Concepts#Login_provider) settings for the [Relativity Server](http://wiki.remobjects.com/wiki/Relativity).
 

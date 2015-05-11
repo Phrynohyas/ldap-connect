@@ -22,6 +22,11 @@ namespace LdapConnect
 
 			var connection = new LdapConnection(options);
 
+			// 1. Probe connection
+			Console.WriteLine("Connecting to LDAP server...");
+			connection.TryConnect();
+			Console.WriteLine("Connecton successful. Hostname, port and SSL options are set correctly");
+
 			Console.ReadKey();
 		}
 	}

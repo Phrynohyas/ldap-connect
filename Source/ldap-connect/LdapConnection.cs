@@ -40,6 +40,20 @@ namespace LdapConnect
 			this._rootGroupName = settings.RootGroup;
 		}
 
+		public void TryConnect()
+		{
+			using (var client = new LdapClient())
+			{
+				client.SslOptions = this._ldap.SslOptions;
+				client.UseStartTLS = this._ldap.UseStartTLS;
+				client.HostName = this._ldap.Hostname;
+				client.Port = this._ldap.Port;
+
+				client.Open();
+				client.Close();
+			}
+		}
+
 		~LdapConnection()
 		{
 			this.Dispose();

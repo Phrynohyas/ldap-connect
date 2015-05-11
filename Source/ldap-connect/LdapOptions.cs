@@ -35,7 +35,7 @@ namespace LdapConnect
 																								});
 			this.Add(@"cert=", @"SSL {certificate} (optional)", v => this.LdapCertificate = v);
 
-			this.Add(@"lookup_dn=", @"LDAP {server login}, f.e. for 'uid=ldapuser,ou=internal,dc=myserver,dc=com' (required)", v => this.LookupDN = v);
+			this.Add(@"lookup_dn=", @"LDAP {server login}, f.e. 'uid=ldapuser,ou=internal,dc=myserver,dc=com' (required)", v => this.LookupDN = v);
 			this.Add(@"lookup_password=", @"LDAP {server password} (required)", v => this.LookupPassword = v);
 
 			this.Add(@"user_base_dn=", @"user search {base DN}, f.e. 'ou=users,dc=myserver,dc=com' (required)", v => this.UserBaseDN = v);
